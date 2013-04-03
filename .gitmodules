@@ -1,0 +1,6 @@
+[submodule "deps/hanappe"]
+	path = deps/hanappe
+	url = git://github.com/makotok/Hanappe.git
+[submodule "deps/spine-runtimes"]
+	path = deps/spine-runtimes
+	url = git://github.com/EsotericSoftware/spine-runtimes.git
