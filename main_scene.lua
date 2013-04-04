@@ -11,8 +11,8 @@ function onCreate(params)
 
     local json = spine.SkeletonJson.new(attachmentLoader)
     json.scale = 0.5
-    local skeletonData = json:readSkeletonDataFile("data/spineboy-skeleton.json")
-    walkAnimation = json:readAnimationFile(skeletonData, "data/spineboy-walk.json")
+    local skeletonData = json:readSkeletonDataFile("data/spineboy.json")
+    walkAnimation = skeletonData:findAnimation("walk")
 
     -- Optional second parameter can be the group for the Skeleton to use. Eg, could be an image group.
     skeleton = spine.Skeleton.new(skeletonData)
