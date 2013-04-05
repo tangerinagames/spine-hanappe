@@ -10,26 +10,41 @@ function onCreate(params)
     end
 
     local json = spine.SkeletonJson.new(attachmentLoader)
-    json.scale = 0.5
+    json.scale = 0.7
+    
     local skeletonData = json:readSkeletonDataFile("data/spineboy.json")
-    walkAnimation = skeletonData:findAnimation("walk")
 
-    -- Optional second parameter can be the group for the Skeleton to use. Eg, could be an image group.
     skeleton = spine.Skeleton.new(skeletonData)
     skeleton.x = 240
-    skeleton.y = 200
+    skeleton.y = 280
     skeleton.flipX = false
     skeleton.flipY = false
-    skeleton.debug = true -- Omit or set to false to not draw debug lines on top of the images.
+    skeleton.debug = false
     skeleton.debugLayer = layer
     skeleton:setToBindPose()
     
-    animationTime = 0
+    local animationStateData = spine.AnimationStateData.new(skeletonData)
+    animationStateData:setMix("walk", "jump", 0.2)
+    animationStateData:setMix("jump", "walk", 0.2)
+
+    animationState = spine.AnimationState.new(animationStateData)
+    animationState:setAnimation("walk", true)
 end
 
 function onEnterFrame()
-  animationTime = animationTime + MOAISim.getStep()
+  animationState:update(MOAISim.getStep())
+  animationState:apply(skeleton)
   
-  walkAnimation:apply(skeleton, animationTime, true)
   skeleton:updateWorldTransform()
+
+  if animationState.current.name == "jump" and animationState.currentTime > animationState.current.duration then
+    animationState:setAnimation("walk", true)
+  end
 end
+
+function onTouchDown()
+  if animationState.current.name ~= "jump" then
+    animationState:setAnimation("jump")
+  end
+end
+

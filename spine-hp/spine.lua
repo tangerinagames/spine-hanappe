@@ -25,6 +25,12 @@
 
 local spine = {}
 
+-- Hanappe
+spine.Skeleton = require "spine-hp.Skeleton"
+spine.AnimationStateData = require "spine-hp.AnimationStateData"
+spine.AnimationState = require "spine-hp.AnimationState"
+
+-- Corona
 spine.utils = require "spine.utils"
 spine.SkeletonJson = require "spine.SkeletonJson"
 spine.SkeletonData = require "spine.SkeletonData"
@@ -32,7 +38,6 @@ spine.BoneData = require "spine.BoneData"
 spine.SlotData = require "spine.SlotData"
 spine.Skin = require "spine.Skin"
 spine.RegionAttachment = require "spine.RegionAttachment"
-spine.Skeleton = require "spine-hp.Skeleton"
 spine.Bone = require "spine.Bone"
 spine.Slot = require "spine.Slot"
 spine.AttachmentLoader = require "spine.AttachmentLoader"
