@@ -18,6 +18,8 @@ function Skeleton.new(skeletonData)
 					image = self.data.attachmentLoader:createImage(attachment)
 					if image then
 						image:setSize(attachment.width, attachment.height)
+						image:setPriority(i)
+						function image:removeSelf() image:setVisible(false) end
 					else
 						print("Error creating image: " .. attachment.name)
 						image = AttachmentLoader.failed
@@ -29,7 +31,6 @@ function Skeleton.new(skeletonData)
 					image:setPos(x, y)
 					image:setRot(0, 0, rotation)
 					image:setScl(xScale, yScale)
-					image:setVisible(true)
 				end
 			end
 		end
