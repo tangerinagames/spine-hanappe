@@ -19,7 +19,7 @@ function Skeleton.new(skeletonData)
 					if image then
 						image:setSize(attachment.width, attachment.height)
 						image:setPriority(i)
-						function image:removeSelf() image:setVisible(false) end
+						function image:removeSelf() image.layer:removeProp(image) end
 					else
 						print("Error creating image: " .. attachment.name)
 						image = AttachmentLoader.failed
