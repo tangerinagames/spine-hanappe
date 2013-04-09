@@ -3,8 +3,8 @@ local AttachmentLoader = require "spine.AttachmentLoader"
 local Skeleton = {}
 
 function Skeleton.new(skeletonData)
-	local self = BaseSkeleton.new(skeletonData, {})
-
+	local self = BaseSkeleton.new(skeletonData, MOAIProp2D.new())
+	
 	function self:updateWorldTransform()
 		for i,bone in ipairs(self.bones) do
 			bone:updateWorldTransform(self.flipX, self.flipY)
@@ -36,14 +36,15 @@ function Skeleton.new(skeletonData)
 		end
 
 		if self.debug then
-			for i,bone in ipairs(self.bones) do
+			local parentX, parentY = self:getLoc()
+			for i, bone in ipairs(self.bones) do
 				if not bone.line then
 					bone.line = Graphics:new{width = bone.data.length, height = 1, layer = self.debugLayer}
 					bone.line:setPenColor(1, 0, 0, 1):fillRect(0, 0, bone.data.length, 1)
 					bone.line:setPiv(0, 0, 0)
 				end
 
-				local x, y = bone.worldX + self.x, -bone.worldY + self.y
+				local x, y = bone.worldX + parentX, -bone.worldY + parentY
 				local rotation = bone.worldRotation
 				local yScale, xScale = 1, 1
 
@@ -75,6 +76,7 @@ function Skeleton.new(skeletonData)
 		local rotation = slot.bone.worldRotation + attachment.rotation
 		local xScale = slot.bone.worldScaleX + attachment.scaleX - 1
 		local yScale = slot.bone.worldScaleY + attachment.scaleY - 1
+		local parentX, parentY = self:getLoc()
 		if self.flipX then
 			xScale = -xScale
 			rotation = -rotation
@@ -83,7 +85,7 @@ function Skeleton.new(skeletonData)
 			yScale = -yScale
 			rotation = -rotation
 		end
-		return x + self.x - attachment.width / 2, y + self.y - attachment.height / 2, -rotation, xScale, yScale
+		return x + parentX - attachment.width / 2, y + parentY - attachment.height / 2, -rotation, xScale, yScale
 	end
 
 	return self

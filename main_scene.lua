@@ -15,8 +15,8 @@ function onCreate(params)
     local skeletonData = json:readSkeletonDataFile("data/spineboy.json")
 
     skeleton = spine.Skeleton.new(skeletonData)
-    skeleton.x = 240
-    skeleton.y = 280
+    skeleton:setLoc(0, 280)
+    skeleton:moveLoc(480, 0, 5)
     skeleton.flipX = false
     skeleton.flipY = false
     skeleton.debug = false
